@@ -34,10 +34,11 @@
           <%= link_to "About", about_path, class: "hover:text-indigo-600" %>
 
           <% if session[:user_id] %>
+            <%= button_to "dashboard", dashboard_path, method: :get, class: "text-indigo-600 hover:underline" %>
             <%= button_to "Log Out", logout_path, method: :delete, class: "text-red-600 hover:underline", form_class: "inline" %>
           <% else %>
             <%= link_to "Log In", login_path, class: "text-indigo-600 hover:underline" %>
-            <%= link_to "Sign Up", login_path, class: "text-indigo-600 hover:underline" %>
+            <%= link_to "Sign Up", signup_path, class: "text-indigo-600 hover:underline" %>
           <% end %>
         </div>
       </nav>

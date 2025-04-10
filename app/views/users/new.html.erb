@@ -1,0 +1,23 @@
+<div class="min-h-screen bg-gray-100 flex flex-col justify-center items-center">
+  <h1 class="text-4xl font-bold text-indigo-600 mb-4">Signup</h1>
+
+  <%= form_with model: @user, url: signup_path, method: :post, local: true do %>
+  <div class="mb-4">
+    <%= label_tag :email, "Email", class: "block mb-2 text-lg" %>
+    <%= text_field_tag :email, params[:email], class: "w-full p-3 border rounded" %>
+  </div>
+
+  <div class="mb-6">
+    <%= label_tag :password, "Password", class: "block mb-2 text-lg" %>
+    <%= password_field_tag :password, nil, class: "w-full p-3 border rounded" %>
+  </div>
+
+  <div class="mb-6">
+      <%= label_tag :password_confirmation, "Confirm Password", class: "block mb-2 text-lg" %>
+      <%= password_field_tag :password_confirmation, nil, class: "w-full p-3 border rounded" %>
+  </div>
+
+  <%= submit_tag "Signup", class: "bg-indigo-600 text-white px-6 py-3 rounded" %>
+<% end %>
+</div>
+
