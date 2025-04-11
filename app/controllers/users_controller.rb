@@ -28,7 +28,7 @@ class UsersController < ApplicationController
   def update
     @user = current_user
 
-    if @user.update(user_params)
+    if @user.update!(user_params)
       redirect_to profile_path, notice: "Profile updated!"
     else
       flash.now[:alert] = "Please fix the errors below."
