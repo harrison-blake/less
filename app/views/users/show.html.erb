@@ -1,0 +1,25 @@
+<div class="min-h-screen bg-gray-100 flex flex-col justify-center items-center px-4">
+  <div class="w-full max-w-xl bg-white rounded-2xl shadow-xl p-10 text-center">
+    
+    <!-- Profile picture -->
+    <div class="w-32 h-32 bg-gray-300 rounded-full mx-auto mb-6 flex items-center justify-center text-gray-500 text-xl font-semibold">
+      IMG
+    </div>
+
+    <h2 class="text-3xl font-bold text-indigo-700 mb-4"><%= @user.name.presence || "Your Name" %></h2>
+
+    <p class="text-lg text-gray-700 mb-2"><strong>Email:</strong> <%= @user.email %></p>
+    <p class="text-lg text-gray-700 mb-2"><strong>Phone:</strong> <%= @user.phone.presence || "Not provided" %></p>
+    <p class="text-lg text-gray-700 mb-2">
+      <strong>Address:</strong>
+      <% if @user.city.present? && @user.state.present? && @user.zip.present? %>
+        <%= @user.city %>, <%= @user.state %> <%= @user.zip %>
+      <% else %>
+        Not provided
+      <% end %>
+    </p>
+  </div>
+  <div class="text-center mt-8">
+    <%= link_to "Edit Profile", profile_edit_path, class: "text-indigo-600 hover:underline text-lg" %>
+  </div>
+</div>
