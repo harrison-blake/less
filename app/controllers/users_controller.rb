@@ -10,16 +10,16 @@ class UsersController < ApplicationController
   end
 
   def create
-      @user = User.new(user_params)
+    @user = User.new(user_params)
 
-      if @user.save
-          session[:user_id] = @user.id
-          redirect_to profile_edit_path
-      else
-          flash.now[:alert] = "There was a problem with your signup."
-          render :new, status: :unprocessable_entity
-      end
+    if @user.save
+      session[:user_id] = @user.id
+      redirect_to profile_edit_path
+    else
+      flash.now[:alert] = "There was a problem with your signup."
+      render :new, status: :unprocessable_entity
     end
+  end
 
   def edit
     @user = current_user
@@ -28,7 +28,7 @@ class UsersController < ApplicationController
   def update
     @user = current_user
 
-    if @user.update!(user_params)
+    if @user.update!(user_params.to_h.compact_blank)
       redirect_to profile_path, notice: "Profile updated!"
     else
       flash.now[:alert] = "Please fix the errors below."
@@ -39,7 +39,7 @@ end
 
 private
     def user_params
-      params.permit(:email, :password, :password_confirmation)
+      params.require(:user).permit(:email, :password, :password_confirmation, :name, :phone, :city, :state, :zip)
     end
 
     def require_login
