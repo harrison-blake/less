@@ -33,19 +33,58 @@
           <%= link_to "Home", root_path, class: "hover:text-indigo-600" %>
           <%= link_to "About", about_path, class: "hover:text-indigo-600" %>
 
-          <% if session[:user_id] %>
+          <% if current_user %>
             <%= button_to "Profile", profile_path, method: :get, class: "text-indigo-600 hover:underline" %>
             <%= button_to "Dashboard", dashboard_path, method: :get, class: "text-indigo-600 hover:underline" %>
             <%= button_to "Log Out", logout_path, method: :delete, class: "text-red-600 hover:underline", form_class: "inline" %>
           <% else %>
-            <%= link_to "Log In", login_path, class: "text-indigo-600 hover:underline" %>
             <%= link_to "Sign Up", signup_path, class: "text-indigo-600 hover:underline" %>
+            <%= link_to "Login", login_path, class: "text-indigo-600 hover:underline" %>
           <% end %>
+          <!-- Settings dropdown -->
+          <div class="relative">
+            <button id="settingsToggle"
+              class="hover:outline hover:outline-2 hover:outline-black-600 hover:outline-offset-2 rounded-full p-2 transition duration-150 ease-in-out">
+              ⚙️
+            </button>
+
+            <div id="settingsMenu" class="absolute right-0 mt-2 w-64 bg-white shadow-lg rounded-xl p-4 hidden z-50">
+              <% if !current_user %>
+                <%= link_to "Sign Up", signup_path,
+                  class: "block w-full text-center font-bold text-white bg-black py-3 rounded-xl mb-2 hover:bg-gray-900" %>
+
+                <%= link_to "Login", login_path,
+                  class: "block w-full text-center font-bold text-black bg-gray-100 py-3 rounded-xl mb-4 hover:bg-gray-200" %>
+              <% end %>
+              
+            <% if current_user %>
+              <%= button_to "Profile", profile_path, method: :get, class: "text-indigo-600 hover:underline" %>
+              <%= button_to "Dashboard", dashboard_path, method: :get, class: "text-indigo-600 hover:underline" %>
+          
+              <% if current_user.customer? %>
+                <%= button_to "Sign up to deliver laundry", new_contractor_path, method: :get,
+                  class: "text-indigo-600 font-medium hover:underline" %>
+              <% end %>
+
+              <%= button_to "Log Out", logout_path, method: :delete, class: "text-red-600 hover:underline", form_class: "inline" %>
+              <% end %>
+            </div>
+          </div>
         </div>
       </nav>
     </header>
 
     <!-- Main page content -->
+    <% if flash[:alert] %>
+      <div class="bg-red-100 text-red-700 border border-red-300 px-6 py-4 mx-auto my-4 max-w-xl rounded-xl text-center text-lg">
+        <%= flash[:alert] %>
+      </div>
+    <% end %>
+    <% if flash[:notice] %>
+      <div class="bg-green-100 text-green-700 border border-green-300 px-6 py-4 mx-auto my-4 max-w-xl rounded-xl text-center text-lg">
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
     <%= yield %>
   </body class="flex-grow">
 </html>

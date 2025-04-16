@@ -9,6 +9,9 @@ Rails.application.routes.draw do
 
   get  "/signup", to: "users#new"
   post "/signup", to: "users#create"
+  get   "/contractor/signup", to: "contractors#new",    as: :new_contractor
+  patch "/contractor/signup", to: "contractors#create", as: :contractors
+
 
   get "/profile", to: "users#show"
   get "/profile/edit", to: "users#edit"
